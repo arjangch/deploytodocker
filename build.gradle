@@ -2,6 +2,7 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 /**
+ *
  * grails docker : https://guides.grails.org/grails-as-docker-container/guide/index.html
  * github :  https://www.youtube.com/watch?v=R8_veQiYBjI
  * Deploy to dockerhub : https://www.youtube.com/watch?v=EIHY_CY5J0k
@@ -9,6 +10,9 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
  *
  * maven :  https://mvnrepository.com/artifact/com.bmuschko/gradle-docker-plugin
  * implementation 'com.bmuschko:gradle-docker-plugin:6.7.0'
+ *
+ * ./gradlew buildImage
+ * docker run --name GrailsDockerOne -p 8080:8080 grails-docker-sample/deploytodocker:0.1
  *
  */
 buildscript {
@@ -130,9 +134,10 @@ assets {
 
 
 ext {
-    dockerTag = "grails-sample/${project.name}:${project.version}".toLowerCase() 
+    dockerTag = "grails-docker-sample/${project.name}:${project.version}".toLowerCase()
     dockerBuildDir = mkdir("${buildDir}/docker") 
 }
+
 task prepareDocker(type: Copy, dependsOn: assemble) { 
     description = 'Copy files from src/main/docker and application jar to Docker temporal build directory'
     group = 'Docker'
@@ -142,6 +147,7 @@ task prepareDocker(type: Copy, dependsOn: assemble) {
 
     into dockerBuildDir
 }
+
 task createDockerfile(type: Dockerfile, dependsOn: prepareDocker) { 
     description = 'Create a Dockerfile file'
     group = 'Docker'
@@ -160,6 +166,7 @@ task createDockerfile(type: Dockerfile, dependsOn: prepareDocker) {
 
     entryPoint '/app/app-entrypoint.sh' 
 }
+
 task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) { 
     description = 'Create Docker image to run the Grails application'
     group = 'Docker'

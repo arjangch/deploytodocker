@@ -8,11 +8,22 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
  * Deploy to dockerhub : https://www.youtube.com/watch?v=EIHY_CY5J0k
  * Deploy to Okteto : https://okteto.com/blog/develop-and-deploy-a-grails-application-in-okteto-cloud/
  *
- * maven :  https://mvnrepository.com/artifact/com.bmuschko/gradle-docker-plugin
+ * Experiment with maven (not working yet) :  https://mvnrepository.com/artifact/com.bmuschko/gradle-docker-plugin
  * implementation 'com.bmuschko:gradle-docker-plugin:6.7.0'
  *
- * ./gradlew buildImage
- * docker run --name GrailsDockerOne -p 8080:8080 grails-docker-sample/deploytodocker:0.1
+ * build docker image:
+ *  %> ./gradlew buildImage
+ *
+ * run in local docker:
+ *  %> docker run --name grailsdockera -p 8080:8080 grailsdeploytodocker:0.1
+ *
+ *
+ * tag image:
+ *  %> docker tag grailsdeploytodocker:0.1 dockerusername/grailsdeploytodocker
+ *
+ * push to docker hub
+ *  %> docker push dockerusername/grailsdeploytodocker
+ *
  *
  */
 buildscript {
@@ -134,7 +145,7 @@ assets {
 
 
 ext {
-    dockerTag = "grails-docker-sample/${project.name}:${project.version}".toLowerCase()
+    dockerTag = "grails${project.name}:${project.version}".toLowerCase()
     dockerBuildDir = mkdir("${buildDir}/docker") 
 }
 

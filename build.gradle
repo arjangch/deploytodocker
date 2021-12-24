@@ -16,14 +16,16 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
  *
  * run in local docker:
  *  %> docker run --name grailsdockera -p 8080:8080 grailsdeploytodocker:0.1
+ *  docker run --name grailsdockera -p 8080:8080 dockerusername/grailsdeploytodocker
  *
- *
- * tag image:
+ * tag image for docker hub:
  *  %> docker tag grailsdeploytodocker:0.1 dockerusername/grailsdeploytodocker
  *
  * push to docker hub
  *  %> docker push dockerusername/grailsdeploytodocker
  *
+ * pull from docker hub
+ * %> docker pull dockerusername/grailsdeploytodocker
  *
  */
 buildscript {
